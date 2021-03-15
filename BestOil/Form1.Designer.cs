@@ -46,17 +46,15 @@ namespace BestOil
             this.PriceLbl = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.TotalTotalLbl = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.HamburgerMaskedBox = new System.Windows.Forms.MaskedTextBox();
             this.FreeMaskedBox = new System.Windows.Forms.MaskedTextBox();
-            this.BeerMaskedBox = new System.Windows.Forms.MaskedTextBox();
             this.CapucinoMaskedBox = new System.Windows.Forms.MaskedTextBox();
             this.HotDogMaskedBox = new System.Windows.Forms.MaskedTextBox();
-            this.BeerPrice = new System.Windows.Forms.Label();
             this.HamburgerPrice = new System.Windows.Forms.Label();
             this.FreePrice = new System.Windows.Forms.Label();
             this.CapucinoPrice = new System.Windows.Forms.Label();
@@ -67,7 +65,6 @@ namespace BestOil
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.BeerCheckedBox = new System.Windows.Forms.CheckBox();
             this.HamburgerCheckedBox = new System.Windows.Forms.CheckBox();
             this.FreeCheckedBox = new System.Windows.Forms.CheckBox();
             this.CapucinoCheckedBox = new System.Windows.Forms.CheckBox();
@@ -168,7 +165,6 @@ namespace BestOil
             this.totalTxtbox.Size = new System.Drawing.Size(67, 26);
             this.totalTxtbox.TabIndex = 11;
             this.totalTxtbox.ValidatingType = typeof(int);
-           // this.totalTxtbox.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.totalTxtbox_MaskInputRejected);
             this.totalTxtbox.TextChanged += new System.EventHandler(this.totalTxtbox_TextChanged);
             // 
             // PriceTxtbox
@@ -180,6 +176,7 @@ namespace BestOil
             this.PriceTxtbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.PriceTxtbox.Size = new System.Drawing.Size(67, 26);
             this.PriceTxtbox.TabIndex = 10;
+            this.PriceTxtbox.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.PriceTxtbox_MaskInputRejected);
             this.PriceTxtbox.TextChanged += new System.EventHandler(this.PriceTxtbox_TextChanged);
             // 
             // label6
@@ -246,7 +243,7 @@ namespace BestOil
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.TotalTotalLbl);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.pictureBox1);
             this.groupBox3.Location = new System.Drawing.Point(18, 472);
@@ -266,15 +263,15 @@ namespace BestOil
             this.label15.TabIndex = 14;
             this.label15.Text = "AZN";
             // 
-            // label14
+            // TotalTotalLbl
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(363, 32);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(118, 55);
-            this.label14.TabIndex = 13;
-            this.label14.Text = "0.00";
+            this.TotalTotalLbl.AutoSize = true;
+            this.TotalTotalLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TotalTotalLbl.Location = new System.Drawing.Point(363, 32);
+            this.TotalTotalLbl.Name = "TotalTotalLbl";
+            this.TotalTotalLbl.Size = new System.Drawing.Size(118, 55);
+            this.TotalTotalLbl.TabIndex = 13;
+            this.TotalTotalLbl.Text = "0.00";
             // 
             // button1
             // 
@@ -285,6 +282,7 @@ namespace BestOil
             this.button1.TabIndex = 1;
             this.button1.Text = "Pay";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // pictureBox1
             // 
@@ -316,10 +314,8 @@ namespace BestOil
             // 
             this.groupBox5.Controls.Add(this.HamburgerMaskedBox);
             this.groupBox5.Controls.Add(this.FreeMaskedBox);
-            this.groupBox5.Controls.Add(this.BeerMaskedBox);
             this.groupBox5.Controls.Add(this.CapucinoMaskedBox);
             this.groupBox5.Controls.Add(this.HotDogMaskedBox);
-            this.groupBox5.Controls.Add(this.BeerPrice);
             this.groupBox5.Controls.Add(this.HamburgerPrice);
             this.groupBox5.Controls.Add(this.FreePrice);
             this.groupBox5.Controls.Add(this.CapucinoPrice);
@@ -328,7 +324,6 @@ namespace BestOil
             this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.Controls.Add(this.label2);
-            this.groupBox5.Controls.Add(this.BeerCheckedBox);
             this.groupBox5.Controls.Add(this.HamburgerCheckedBox);
             this.groupBox5.Controls.Add(this.FreeCheckedBox);
             this.groupBox5.Controls.Add(this.CapucinoCheckedBox);
@@ -344,69 +339,57 @@ namespace BestOil
             // HamburgerMaskedBox
             // 
             this.HamburgerMaskedBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.HamburgerMaskedBox.Location = new System.Drawing.Point(227, 169);
-            this.HamburgerMaskedBox.Mask = "0000000";
+            this.HamburgerMaskedBox.Location = new System.Drawing.Point(227, 187);
+            this.HamburgerMaskedBox.Mask = "00";
             this.HamburgerMaskedBox.Name = "HamburgerMaskedBox";
             this.HamburgerMaskedBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.HamburgerMaskedBox.Size = new System.Drawing.Size(59, 26);
             this.HamburgerMaskedBox.TabIndex = 23;
+            this.HamburgerMaskedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.HamburgerMaskedBox.TextChanged += new System.EventHandler(this.HamburgerMaskedBox_TextChanged);
             // 
             // FreeMaskedBox
             // 
             this.FreeMaskedBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.FreeMaskedBox.Location = new System.Drawing.Point(227, 132);
-            this.FreeMaskedBox.Mask = "0000000";
+            this.FreeMaskedBox.Location = new System.Drawing.Point(227, 150);
+            this.FreeMaskedBox.Mask = "00";
             this.FreeMaskedBox.Name = "FreeMaskedBox";
             this.FreeMaskedBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.FreeMaskedBox.Size = new System.Drawing.Size(59, 26);
             this.FreeMaskedBox.TabIndex = 22;
-            // 
-            // BeerMaskedBox
-            // 
-            this.BeerMaskedBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.BeerMaskedBox.Location = new System.Drawing.Point(227, 205);
-            this.BeerMaskedBox.Mask = "0000000";
-            this.BeerMaskedBox.Name = "BeerMaskedBox";
-            this.BeerMaskedBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.BeerMaskedBox.Size = new System.Drawing.Size(59, 26);
-            this.BeerMaskedBox.TabIndex = 21;
+            this.FreeMaskedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.FreeMaskedBox.TextChanged += new System.EventHandler(this.FreeMaskedBox_TextChanged);
             // 
             // CapucinoMaskedBox
             // 
             this.CapucinoMaskedBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.CapucinoMaskedBox.Location = new System.Drawing.Point(227, 99);
-            this.CapucinoMaskedBox.Mask = "0000000";
+            this.CapucinoMaskedBox.Location = new System.Drawing.Point(227, 117);
+            this.CapucinoMaskedBox.Mask = "00";
             this.CapucinoMaskedBox.Name = "CapucinoMaskedBox";
             this.CapucinoMaskedBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CapucinoMaskedBox.Size = new System.Drawing.Size(59, 26);
             this.CapucinoMaskedBox.TabIndex = 20;
+            this.CapucinoMaskedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CapucinoMaskedBox.TextChanged += new System.EventHandler(this.CapucinoMaskedBox_TextChanged);
             // 
             // HotDogMaskedBox
             // 
             this.HotDogMaskedBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.HotDogMaskedBox.Location = new System.Drawing.Point(227, 63);
-            this.HotDogMaskedBox.Mask = "00000";
+            this.HotDogMaskedBox.Location = new System.Drawing.Point(227, 81);
+            this.HotDogMaskedBox.Mask = "00";
             this.HotDogMaskedBox.Name = "HotDogMaskedBox";
             this.HotDogMaskedBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.HotDogMaskedBox.Size = new System.Drawing.Size(59, 26);
             this.HotDogMaskedBox.TabIndex = 19;
+            this.HotDogMaskedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.HotDogMaskedBox.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.HotDogMaskedBox_MaskInputRejected);
             this.HotDogMaskedBox.TextChanged += new System.EventHandler(this.HotDogMaskedBox_TextChanged);
-            // 
-            // BeerPrice
-            // 
-            this.BeerPrice.AutoSize = true;
-            this.BeerPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BeerPrice.Location = new System.Drawing.Point(133, 213);
-            this.BeerPrice.Name = "BeerPrice";
-            this.BeerPrice.Size = new System.Drawing.Size(36, 18);
-            this.BeerPrice.TabIndex = 18;
-            this.BeerPrice.Text = "9.99";
             // 
             // HamburgerPrice
             // 
             this.HamburgerPrice.AutoSize = true;
             this.HamburgerPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HamburgerPrice.Location = new System.Drawing.Point(133, 177);
+            this.HamburgerPrice.Location = new System.Drawing.Point(133, 195);
             this.HamburgerPrice.Name = "HamburgerPrice";
             this.HamburgerPrice.Size = new System.Drawing.Size(36, 18);
             this.HamburgerPrice.TabIndex = 17;
@@ -416,17 +399,17 @@ namespace BestOil
             // 
             this.FreePrice.AutoSize = true;
             this.FreePrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FreePrice.Location = new System.Drawing.Point(133, 136);
+            this.FreePrice.Location = new System.Drawing.Point(133, 154);
             this.FreePrice.Name = "FreePrice";
             this.FreePrice.Size = new System.Drawing.Size(36, 18);
             this.FreePrice.TabIndex = 16;
-            this.FreePrice.Text = "7.15";
+            this.FreePrice.Text = "7.20";
             // 
             // CapucinoPrice
             // 
             this.CapucinoPrice.AutoSize = true;
             this.CapucinoPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CapucinoPrice.Location = new System.Drawing.Point(133, 99);
+            this.CapucinoPrice.Location = new System.Drawing.Point(133, 117);
             this.CapucinoPrice.Name = "CapucinoPrice";
             this.CapucinoPrice.Size = new System.Drawing.Size(36, 18);
             this.CapucinoPrice.TabIndex = 15;
@@ -436,7 +419,7 @@ namespace BestOil
             // 
             this.HotDogPrice.AutoSize = true;
             this.HotDogPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HotDogPrice.Location = new System.Drawing.Point(133, 67);
+            this.HotDogPrice.Location = new System.Drawing.Point(133, 85);
             this.HotDogPrice.Name = "HotDogPrice";
             this.HotDogPrice.Size = new System.Drawing.Size(36, 18);
             this.HotDogPrice.TabIndex = 14;
@@ -501,23 +484,11 @@ namespace BestOil
             this.label2.TabIndex = 6;
             this.label2.Text = "Name";
             // 
-            // BeerCheckedBox
-            // 
-            this.BeerCheckedBox.AutoSize = true;
-            this.BeerCheckedBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BeerCheckedBox.Location = new System.Drawing.Point(6, 213);
-            this.BeerCheckedBox.Name = "BeerCheckedBox";
-            this.BeerCheckedBox.Size = new System.Drawing.Size(101, 20);
-            this.BeerCheckedBox.TabIndex = 4;
-            this.BeerCheckedBox.Text = "Beer + chips";
-            this.BeerCheckedBox.UseVisualStyleBackColor = true;
-            this.BeerCheckedBox.CheckedChanged += new System.EventHandler(this.BeerCheckedBox_CheckedChanged);
-            // 
             // HamburgerCheckedBox
             // 
             this.HamburgerCheckedBox.AutoSize = true;
             this.HamburgerCheckedBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HamburgerCheckedBox.Location = new System.Drawing.Point(6, 175);
+            this.HamburgerCheckedBox.Location = new System.Drawing.Point(6, 193);
             this.HamburgerCheckedBox.Name = "HamburgerCheckedBox";
             this.HamburgerCheckedBox.Size = new System.Drawing.Size(95, 20);
             this.HamburgerCheckedBox.TabIndex = 3;
@@ -529,7 +500,7 @@ namespace BestOil
             // 
             this.FreeCheckedBox.AutoSize = true;
             this.FreeCheckedBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FreeCheckedBox.Location = new System.Drawing.Point(6, 137);
+            this.FreeCheckedBox.Location = new System.Drawing.Point(6, 155);
             this.FreeCheckedBox.Name = "FreeCheckedBox";
             this.FreeCheckedBox.Size = new System.Drawing.Size(55, 20);
             this.FreeCheckedBox.TabIndex = 2;
@@ -541,7 +512,7 @@ namespace BestOil
             // 
             this.CapucinoCheckedBox.AutoSize = true;
             this.CapucinoCheckedBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CapucinoCheckedBox.Location = new System.Drawing.Point(6, 100);
+            this.CapucinoCheckedBox.Location = new System.Drawing.Point(6, 118);
             this.CapucinoCheckedBox.Name = "CapucinoCheckedBox";
             this.CapucinoCheckedBox.Size = new System.Drawing.Size(92, 20);
             this.CapucinoCheckedBox.TabIndex = 1;
@@ -553,7 +524,7 @@ namespace BestOil
             // 
             this.HotDogCheckBox.AutoSize = true;
             this.HotDogCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HotDogCheckBox.Location = new System.Drawing.Point(6, 65);
+            this.HotDogCheckBox.Location = new System.Drawing.Point(6, 83);
             this.HotDogCheckBox.Name = "HotDogCheckBox";
             this.HotDogCheckBox.Size = new System.Drawing.Size(75, 20);
             this.HotDogCheckBox.TabIndex = 0;
@@ -618,21 +589,18 @@ namespace BestOil
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox BeerCheckedBox;
         private System.Windows.Forms.CheckBox HamburgerCheckedBox;
         private System.Windows.Forms.CheckBox FreeCheckedBox;
         private System.Windows.Forms.CheckBox CapucinoCheckedBox;
         private System.Windows.Forms.CheckBox HotDogCheckBox;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label BeerPrice;
+        private System.Windows.Forms.Label TotalTotalLbl;
         private System.Windows.Forms.Label HamburgerPrice;
         private System.Windows.Forms.Label FreePrice;
         private System.Windows.Forms.Label CapucinoPrice;
         private System.Windows.Forms.Label HotDogPrice;
         private System.Windows.Forms.MaskedTextBox HamburgerMaskedBox;
         private System.Windows.Forms.MaskedTextBox FreeMaskedBox;
-        private System.Windows.Forms.MaskedTextBox BeerMaskedBox;
         private System.Windows.Forms.MaskedTextBox CapucinoMaskedBox;
         private System.Windows.Forms.MaskedTextBox HotDogMaskedBox;
     }
